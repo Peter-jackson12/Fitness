@@ -23,7 +23,7 @@ import torch  # noqa: E402
 import torchvision  # noqa: E402
 
 from common import ROOT, class_names  # noqa: E402
-from dataset import CV_FOLDS, PREPROCESS, augment_preset, preprocess_ops, balanced_class_weights, make_loaders, seed_everything, set_reproducible  # noqa: E402
+from dataset import CV_FOLDS, CV_SUBSETS, PREPROCESS, augment_preset, preprocess_ops, balanced_class_weights, make_loaders, seed_everything, set_reproducible  # noqa: E402
 from models import STRATEGIES, build_model, count_params  # noqa: E402
 from trainer import fit  # noqa: E402
 
@@ -87,6 +87,9 @@ def _run_locked(args, out_root: Path) -> list[dict]:
         _set_aside(p, stamp)
     summaries = []
     cv_sha = hashlib.sha256(CV_FOLDS.read_bytes()).hexdigest() if args.cv_fold else None
+    sub_sha = hashlib.sha256(CV_SUBSETS.read_bytes()).hexdigest() if (args.cv_fold and args.train_pct != 100) else None
+    if args.cv_fold and args.class_weight == "balanced":
+        raise SystemExit("교차검증에서는 클래스 가중치를 쓰지 않는다(가중치가 공식 Train 기준으로 계산됨)")
     for strategy in args.strategies:
         out = out_root / strategy
         out.mkdir(parents=True)
@@ -103,7 +106,7 @@ def _run_locked(args, out_root: Path) -> list[dict]:
             "preprocess_detail": [repr(t) for t in preprocess_ops(args.preprocess, args.input_size)], "augment": args.augment,
             "augment_detail": [repr(t) for t in (augment_preset(args.augment) or [])],
             "seed": args.seed, "num_workers_train": args.num_workers, "num_workers_eval": 0, "params": count_params(model),
-            "cv_fold": args.cv_fold, "cv_folds_sha256": cv_sha,
+            "cv_fold": args.cv_fold, "cv_folds_sha256": cv_sha, "cv_subsets_sha256": sub_sha,
             "notes": args.notes, "env": environment(),
             "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         }

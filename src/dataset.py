@@ -156,17 +156,32 @@ def load_split(split: str, train_pct: int = 100) -> pd.DataFrame:
 CV_FOLDS = DATA_RAW.parent / "splits" / "cv3_folds.csv"  # 사람 단위 3-fold(D-037, src/make_cv_folds.py)
 
 
-def load_cv(fold: int) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """사람 단위 교차검증 fold의 (학습, 검증) 메타데이터. 공식 Train(100%) + Val의 19명만 쓰고 Test는 넣지 않는다."""
+CV_SUBSETS = DATA_RAW.parent / "splits" / "cv3_train_subsets.csv"  # CV 학습 25·50% 부분 집합(DS, src/make_cv_subsets.py)
+
+
+def load_cv(fold: int, train_pct: int = 100) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """사람 단위 교차검증 fold의 (학습, 검증) 메타데이터. 공식 Train(100%) + Val의 19명만 쓰고 Test는 넣지 않는다.
+
+    train_pct가 25·50이면 학습 쪽만 `cv3_train_subsets.csv`의 선택으로 줄인다. 검증은 항상 100%다.
+    """
     if fold not in (1, 2, 3):
         raise ValueError(f"fold는 1·2·3 중 하나: {fold}")
+    if train_pct not in TRAIN_PCTS:
+        raise ValueError(f"train_pct는 {TRAIN_PCTS} 중 하나: {train_pct}")
     folds = pd.read_csv(CV_FOLDS)
     d = pd.concat([load_split("train", 100), load_split("val", 100)], ignore_index=True)
     d = d.merge(folds[["person_id", "fold"]], on="person_id", how="left", validate="many_to_one")
     if d["fold"].isna().any():
         raise RuntimeError("fold가 없는 사람이 있다(cv3_folds.csv 확인)")
-    return (d[d["fold"] != fold].drop(columns="fold").reset_index(drop=True),
-            d[d["fold"] == fold].drop(columns="fold").reset_index(drop=True))
+    tr = d[d["fold"] != fold].drop(columns="fold").reset_index(drop=True)
+    va = d[d["fold"] == fold].drop(columns="fold").reset_index(drop=True)
+    if train_pct != 100:
+        sub = pd.read_csv(CV_SUBSETS).set_index("image_id")[f"in{train_pct}"]
+        keep = tr["image_id"].map(sub)
+        if keep.isna().any():
+            raise RuntimeError("부분 집합 파일에 없는 학습 이미지가 있다(cv3_train_subsets.csv 확인)")
+        tr = tr[keep.astype(bool)].reset_index(drop=True)
+    return tr, va
 
 
 class FitnessDataset(Dataset):
@@ -224,9 +239,9 @@ def make_loaders(train_pct: int = 100, batch_size: int = 32, num_workers: int = 
     """
     train_tf, eval_tf = build_transforms(size, train_augment, preprocess)
     if cv_fold is not None:  # 사람 단위 교차검증: "val"은 그 fold의 검증 사람들
-        if allow_test or train_pct != 100:
-            raise ValueError("교차검증은 Train 100%만 쓰고 Test를 만들지 않는다")
-        cv_tr, cv_va = load_cv(cv_fold)
+        if allow_test:
+            raise ValueError("교차검증은 Test를 만들지 않는다")
+        cv_tr, cv_va = load_cv(cv_fold, train_pct)
         frames = {"train": cv_tr, "val": cv_va}
     else:
         frames = {"train": load_split("train", train_pct), "val": load_split("val", train_pct)}

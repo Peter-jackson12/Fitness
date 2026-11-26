@@ -1,0 +1,48 @@
+{
+  "run_id": "DS-p50-f1",
+  "strategy": "fe",
+  "train_pct": 50,
+  "batch_size": 32,
+  "max_epochs": 50,
+  "patience": 5,
+  "optimizer": "AdamW",
+  "lr_head": 0.001,
+  "lr_backbone": null,
+  "weight_decay": 0.0001,
+  "loss": "CrossEntropy",
+  "class_weight": "none",
+  "class_weights": null,
+  "amp_fp16": true,
+  "input": "letterbox 224 + ImageNet 정규화",
+  "input_size": 224,
+  "preprocess": "letterbox",
+  "preprocess_detail": [
+    "Letterbox(size=224, fill=(124, 116, 104))"
+  ],
+  "augment": "none",
+  "augment_detail": [],
+  "seed": 42,
+  "num_workers_train": 2,
+  "num_workers_eval": 0,
+  "params": {
+    "total": 11182668,
+    "trainable": 6156
+  },
+  "cv_fold": 1,
+  "cv_folds_sha256": "ad1f57b6c0cc55e1be9f074704979584349a3b8af228d210851a5966ef125a53",
+  "cv_subsets_sha256": "e3fcec1860899fa00fd57ca75f73e42a8ecf877cdff6183a2626937e9bdef21f",
+  "notes": "DS 데이터 양 실험(학습 50%, fold 1, experiments/DS/PLAN.md)",
+  "env": {
+    "python": "3.14.7",
+    "torch": "2.14.1+cu130",
+    "torchvision": "0.29.1+cu130",
+    "cuda": "13.0",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "started_at": "2026-11-26 20:21:37"
+}
