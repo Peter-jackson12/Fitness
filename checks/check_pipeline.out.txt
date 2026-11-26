@@ -54,7 +54,26 @@ OK  증강을 켜면 Train 이미지가 매번 달라짐(10회 중 10회)
 OK  augment none = 증강 없음
 OK  Σ n_c·w_c = N(8,144): 손실 크기 보존
 OK  가장 적은 클래스 가중치 최대(2.18), 가장 많은 클래스 최소(0.61)
+OK  원본 384×216
+OK  전처리별 텐서 모양 {'letterbox': (3, 224, 224), 'stretch': (3, 224, 224), 'aspect': (3, 126, 224), 'ccrop': (3, 224, 224), 'gray': (3, 224, 224)}
+OK  aspect 384 = 원본 크기 384×216
+OK  aspect 384는 원본 픽셀 그대로(크기 변경 없음)
+OK  aspect 224 = letterbox 224의 내용 영역(패딩만 없음)
+OK  ccrop: 가운데 216×216(가로 84~299)
+OK  gray: 정규화 전 세 채널이 같음
+OK  preprocess 기본값 = letterbox(기존과 같음)
+OK  aspect 배치 32×3×126×224(정사각형 아님)
+OK  ResNet18이 384×216 입력도 받음(평균 풀링)
+OK  CV fold 1: 사람 겹침 없음, 합계 9,584장
+OK  CV fold 1: Test 행 없음
+OK  CV fold 2: 사람 겹침 없음, 합계 9,584장
+OK  CV fold 2: Test 행 없음
+OK  CV fold 3: 사람 겹침 없음, 합계 9,584장
+OK  CV fold 3: Test 행 없음
+OK  세 fold의 검증을 합치면 모든 이미지가 정확히 한 번
+OK  make_loaders(cv_fold=2): val = fold 2 검증, Test 없음
+OK  CV에서 allow_test=True는 거부
 OK  common import 때 CUBLAS_WORKSPACE_CONFIG 설정
 OK  set_reproducible(True): cuDNN deterministic, benchmark 끔, 결정적 알고리즘 강제
 
-전체 통과: 58개 항목
+전체 통과: 77개 항목

@@ -1,0 +1,20 @@
+[full] epoch  1/50 | train loss 0.4504 acc 0.8313 | val loss 0.3993 acc 0.8527 F1 0.8020 * | 21.5s + 5.1s
+[full] epoch  2/50 | train loss 0.1312 acc 0.9539 | val loss 0.6253 acc 0.8414 F1 0.7731 | 7.1s + 5.1s
+[full] epoch  3/50 | train loss 0.0633 acc 0.9777 | val loss 0.4961 acc 0.8497 F1 0.7905 | 7.2s + 5.1s
+[full] epoch  4/50 | train loss 0.0462 acc 0.9838 | val loss 0.5873 acc 0.8649 F1 0.7998 | 7.5s + 5.7s
+[full] epoch  5/50 | train loss 0.0326 acc 0.9894 | val loss 0.5343 acc 0.8646 F1 0.8040 * | 7.3s + 5.7s
+[full] epoch  6/50 | train loss 0.0273 acc 0.9915 | val loss 0.6106 acc 0.8592 F1 0.8128 * | 7.3s + 5.7s
+[full] epoch  7/50 | train loss 0.0214 acc 0.9933 | val loss 0.6049 acc 0.8613 F1 0.8156 * | 7.0s + 5.7s
+[full] epoch  8/50 | train loss 0.0169 acc 0.9960 | val loss 0.4930 acc 0.8750 F1 0.8375 * | 7.3s + 6.1s
+[full] epoch  9/50 | train loss 0.0047 acc 0.9986 | val loss 0.5634 acc 0.8714 F1 0.8234 | 7.2s + 5.8s
+[full] epoch 10/50 | train loss 0.0028 acc 0.9995 | val loss 0.5860 acc 0.8774 F1 0.8407 * | 7.2s + 6.1s
+[full] epoch 11/50 | train loss 0.0004 acc 1.0000 | val loss 0.6058 acc 0.8786 F1 0.8341 | 7.1s + 5.9s
+[full] epoch 12/50 | train loss 0.0002 acc 1.0000 | val loss 0.6431 acc 0.8786 F1 0.8369 | 7.2s + 6.0s
+[full] epoch 13/50 | train loss 0.0001 acc 1.0000 | val loss 0.6316 acc 0.8798 F1 0.8423 * | 6.9s + 5.9s
+[full] epoch 14/50 | train loss 0.0001 acc 1.0000 | val loss 0.6230 acc 0.8789 F1 0.8358 | 7.1s + 5.9s
+[full] epoch 15/50 | train loss 0.0001 acc 1.0000 | val loss 0.6403 acc 0.8827 F1 0.8416 | 7.1s + 5.7s
+[full] epoch 16/50 | train loss 0.0001 acc 1.0000 | val loss 0.6647 acc 0.8780 F1 0.8377 | 7.2s + 5.9s
+[full] epoch 17/50 | train loss 0.0001 acc 1.0000 | val loss 0.6461 acc 0.8810 F1 0.8418 | 7.2s + 5.9s
+[full] epoch 18/50 | train loss 0.0001 acc 1.0000 | val loss 0.6493 acc 0.8804 F1 0.8386 | 7.0s + 5.9s
+[full] Early stopping: 5 epoch 연속 개선 없음. 최고 epoch 13
+{"strategy": "full", "best_epoch": 13, "epochs_run": 18, "total_time_s": 246.52897049998865, "mean_train_epoch_s": 7.956499711109144, "peak_gpu_mem_mb": 628.712890625} val_macro_f1=0.8423

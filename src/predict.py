@@ -11,7 +11,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from common import ROOT, class_names
-from dataset import FitnessDataset, build_transforms, load_split
+from dataset import FitnessDataset, build_transforms, load_cv, load_split
 from metrics import evaluate
 from models import build_model
 
@@ -26,14 +26,23 @@ def load_trained(run_id: str, strategy: str, device) -> torch.nn.Module:
 
 
 def predict_split(run_id: str, strategy: str, split: str = "val", device=None, batch_size: int = 64,
-                  allow_test: bool = False) -> pd.DataFrame:
-    """이미지별 정답·예측·확률 표. 순서는 메타데이터 CSV와 같다(shuffle 없음)."""
+                  allow_test: bool = False, preprocess: str | None = None) -> pd.DataFrame:
+    """이미지별 정답·예측·확률 표. 순서는 메타데이터 CSV와 같다(shuffle 없음).
+
+    preprocess: 진단용으로 입력 전처리만 바꿀 때 준다(예: 컬러로 학습한 모델에 "gray"). 없으면 학습 때와 같다.
+    """
     if split == "test" and not allow_test:
         raise PermissionError("Test 예측은 최종 평가 때만 한다(allow_test=True 필요).")
     device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    df = load_split(split)
     cfg = json.loads((ROOT / "experiments" / run_id / strategy / "config.json").read_text(encoding="utf-8"))
-    _, eval_tf = build_transforms(cfg.get("input_size", 224))  # 학습 때와 같은 입력 크기
+    if cfg.get("cv_fold"):  # 교차검증 실행: "val"은 그 fold의 검증 사람들. Test는 쓰지 않는다
+        if split != "val":
+            raise ValueError("교차검증 실행은 그 fold의 검증 데이터(split='val')만 예측한다")
+        df = load_cv(cfg["cv_fold"])[1]
+    else:
+        df = load_split(split)
+    pre = preprocess or cfg.get("preprocess", "letterbox")  # 기본은 학습 때와 같은 입력
+    _, eval_tf = build_transforms(cfg.get("input_size", 224), preprocess=pre)
     loader = DataLoader(FitnessDataset(df, eval_tf), batch_size=batch_size, shuffle=False, num_workers=0)
     out = evaluate(load_trained(run_id, strategy, device), loader, device, return_outputs=True)
     names = class_names()

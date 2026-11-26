@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import platform
@@ -22,7 +23,7 @@ import torch  # noqa: E402
 import torchvision  # noqa: E402
 
 from common import ROOT, class_names  # noqa: E402
-from dataset import augment_preset, balanced_class_weights, make_loaders, seed_everything, set_reproducible  # noqa: E402
+from dataset import CV_FOLDS, PREPROCESS, augment_preset, preprocess_ops, balanced_class_weights, make_loaders, seed_everything, set_reproducible  # noqa: E402
 from models import STRATEGIES, build_model, count_params  # noqa: E402
 from trainer import fit  # noqa: E402
 
@@ -85,6 +86,7 @@ def _run_locked(args, out_root: Path) -> list[dict]:
     for p in existing:
         _set_aside(p, stamp)
     summaries = []
+    cv_sha = hashlib.sha256(CV_FOLDS.read_bytes()).hexdigest() if args.cv_fold else None
     for strategy in args.strategies:
         out = out_root / strategy
         out.mkdir(parents=True)
@@ -97,16 +99,19 @@ def _run_locked(args, out_root: Path) -> list[dict]:
             "weight_decay": args.weight_decay, "loss": "CrossEntropy", "class_weight": args.class_weight,
             "class_weights": balanced_class_weights(args.train_pct).round(decimals=4).tolist() if args.class_weight == "balanced" else None,
             "amp_fp16": not args.no_amp,
-            "input": f"letterbox {args.input_size} (ImageNet 평균색 패딩) + ImageNet 정규화", "input_size": args.input_size, "augment": args.augment,
+            "input": f"{args.preprocess} {args.input_size} + ImageNet 정규화", "input_size": args.input_size, "preprocess": args.preprocess,
+            "preprocess_detail": [repr(t) for t in preprocess_ops(args.preprocess, args.input_size)], "augment": args.augment,
             "augment_detail": [repr(t) for t in (augment_preset(args.augment) or [])],
             "seed": args.seed, "num_workers_train": args.num_workers, "num_workers_eval": 0, "params": count_params(model),
+            "cv_fold": args.cv_fold, "cv_folds_sha256": cv_sha,
             "notes": args.notes, "env": environment(),
             "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         }
         (out / "config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8")
 
         loaders = make_loaders(train_pct=args.train_pct, batch_size=args.batch_size, num_workers=args.num_workers, seed=args.seed,
-                               size=args.input_size, train_augment=augment_preset(args.augment))
+                               size=args.input_size, train_augment=augment_preset(args.augment), preprocess=args.preprocess,
+                               cv_fold=args.cv_fold)
         res = fit(model, strategy, loaders, device, args.max_epochs, args.patience,
                   args.lr_head, args.lr_backbone, args.weight_decay, amp=not args.no_amp,
                   class_weights=balanced_class_weights(args.train_pct) if args.class_weight == "balanced" else None)
@@ -157,6 +162,9 @@ def parse_args(argv=None):
     p.add_argument("--input-size", type=int, default=224, help="letterbox 정사각형 한 변(기본 224, E07은 384)")
     p.add_argument("--class-weight", default="none", choices=("none", "balanced"),
                    help="학습 손실의 클래스 가중치(balanced: N/(K·n_c)). Val 손실에는 쓰지 않음")
+    p.add_argument("--preprocess", default="letterbox", choices=PREPROCESS, help="전처리 방식(dataset.preprocess_ops, P1 시리즈)")
+    p.add_argument("--cv-fold", type=int, choices=(1, 2, 3), default=None,
+                   help="사람 단위 교차검증 fold(검증 = 그 fold 사람, data/splits/cv3_folds.csv). 없으면 공식 Train/Val")
     p.add_argument("--augment", default="none", choices=("none", "basic"), help="Train 전용 증강(dataset.augment_preset)")
     p.add_argument("--notes", default="")
     return p.parse_args(argv)

@@ -1,0 +1,19 @@
+[full] epoch  1/50 | train loss 0.3186 acc 0.8830 | val loss 0.4087 acc 0.8666 F1 0.8206 * | 22.1s + 4.1s
+[full] epoch  2/50 | train loss 0.0813 acc 0.9711 | val loss 0.3369 acc 0.8802 F1 0.8534 * | 7.4s + 4.2s
+[full] epoch  3/50 | train loss 0.0351 acc 0.9891 | val loss 0.4413 acc 0.8802 F1 0.8563 * | 7.7s + 4.2s
+[full] epoch  4/50 | train loss 0.0273 acc 0.9918 | val loss 0.3950 acc 0.8820 F1 0.8485 | 7.4s + 4.2s
+[full] epoch  5/50 | train loss 0.0222 acc 0.9936 | val loss 0.3789 acc 0.9081 F1 0.8730 * | 7.5s + 4.2s
+[full] epoch  6/50 | train loss 0.0108 acc 0.9969 | val loss 0.4708 acc 0.9015 F1 0.8679 | 7.7s + 4.3s
+[full] epoch  7/50 | train loss 0.0282 acc 0.9917 | val loss 0.4049 acc 0.9018 F1 0.8686 | 7.5s + 4.4s
+[full] epoch  8/50 | train loss 0.0129 acc 0.9961 | val loss 0.4532 acc 0.8928 F1 0.8630 | 7.3s + 4.4s
+[full] epoch  9/50 | train loss 0.0161 acc 0.9954 | val loss 0.3836 acc 0.9161 F1 0.8742 * | 7.6s + 4.5s
+[full] epoch 10/50 | train loss 0.0100 acc 0.9973 | val loss 0.5175 acc 0.8914 F1 0.8732 | 7.3s + 4.5s
+[full] epoch 11/50 | train loss 0.0046 acc 0.9985 | val loss 0.4730 acc 0.9077 F1 0.8756 * | 7.4s + 4.4s
+[full] epoch 12/50 | train loss 0.0002 acc 1.0000 | val loss 0.4737 acc 0.9112 F1 0.8785 * | 7.7s + 4.5s
+[full] epoch 13/50 | train loss 0.0002 acc 1.0000 | val loss 0.4849 acc 0.9112 F1 0.8782 | 7.5s + 4.4s
+[full] epoch 14/50 | train loss 0.0007 acc 0.9997 | val loss 0.5306 acc 0.9042 F1 0.8677 | 7.4s + 4.5s
+[full] epoch 15/50 | train loss 0.0100 acc 0.9966 | val loss 0.5169 acc 0.8983 F1 0.8549 | 7.6s + 4.4s
+[full] epoch 16/50 | train loss 0.0259 acc 0.9921 | val loss 0.4826 acc 0.8980 F1 0.8670 | 7.4s + 4.4s
+[full] epoch 17/50 | train loss 0.0117 acc 0.9960 | val loss 0.4460 acc 0.9088 F1 0.8666 | 7.4s + 4.5s
+[full] Early stopping: 5 epoch 연속 개선 없음. 최고 epoch 12
+{"strategy": "full", "best_epoch": 12, "epochs_run": 17, "total_time_s": 216.19949209998595, "mean_train_epoch_s": 8.352170452930936, "peak_gpu_mem_mb": 628.712890625} val_macro_f1=0.8785

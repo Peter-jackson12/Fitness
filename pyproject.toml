@@ -14,6 +14,7 @@ dependencies = [
     "matplotlib>=3.9",
     "tqdm>=4.66",
     "ipykernel>=6.29",
+    "openai>=3.60.0",
 ]
 
 [tool.uv]

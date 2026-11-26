@@ -1,0 +1,48 @@
+{
+  "run_id": "P1-gray-s43",
+  "strategy": "full",
+  "train_pct": 100,
+  "batch_size": 32,
+  "max_epochs": 50,
+  "patience": 5,
+  "optimizer": "AdamW",
+  "lr_head": 0.001,
+  "lr_backbone": 0.0001,
+  "weight_decay": 0.0001,
+  "loss": "CrossEntropy",
+  "class_weight": "none",
+  "class_weights": null,
+  "amp_fp16": true,
+  "input": "gray 224 + ImageNet 정규화",
+  "input_size": 224,
+  "preprocess": "gray",
+  "preprocess_detail": [
+    "Letterbox(size=224, fill=(124, 116, 104))",
+    "Grayscale(num_output_channels=3)"
+  ],
+  "augment": "none",
+  "augment_detail": [],
+  "seed": 43,
+  "num_workers_train": 2,
+  "num_workers_eval": 0,
+  "params": {
+    "total": 11182668,
+    "trainable": 11182668
+  },
+  "cv_fold": null,
+  "cv_folds_sha256": null,
+  "notes": "P1 전처리 시리즈 1단계(gray, experiments/P1/PLAN.md)",
+  "env": {
+    "python": "3.14.7",
+    "torch": "2.14.1+cu130",
+    "torchvision": "0.29.1+cu130",
+    "cuda": "13.0",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "started_at": "2026-11-26 16:28:30"
+}

@@ -1,0 +1,56 @@
+﻿kind,image_id,image_path,clip_id,person_id,camera,frame_no,state_code,target_id,true_name,pred,pred_name,conf,p_true
+오분류,fitness_d13c227d1122f75ecd8689b4,images/val/fitness_d13c227d1122f75ecd8689b4.jpg,clip_555e5ac29dd4e1061996ac0f,Z23,B,1,262,2,덤벨 벤트오버 로우,7,바벨 데드리프트,0.99963033,6.166901e-05
+오분류,fitness_2403826389cae0182842d1dc,images/val/fitness_2403826389cae0182842d1dc.jpg,clip_fe96dbe490a2d36d0d0890ea,Z23,E,11,279,2,덤벨 벤트오버 로우,8,바벨 런지,0.9907094,0.005604762
+오분류,fitness_5f9ebcdef00ef90de62850f2,images/val/fitness_5f9ebcdef00ef90de62850f2.jpg,clip_5775b31956576c81304f0dac,Z23,D,1,255,2,덤벨 벤트오버 로우,7,바벨 데드리프트,0.7636834,0.23565574
+오분류,fitness_f9e8801d0e055c352a7b42ba,images/val/fitness_f9e8801d0e055c352a7b42ba.jpg,clip_f0ae40da090eaa76052d31af,Z23,B,1,263,2,덤벨 벤트오버 로우,7,바벨 데드리프트,0.9965318,0.00020535324
+오분류,fitness_164a253c358da44e342ddb98,images/val/fitness_164a253c358da44e342ddb98.jpg,clip_7b9e9c7acfb6252b406e4f45,Z23,E,1,253,2,덤벨 벤트오버 로우,7,바벨 데드리프트,0.7780328,0.112744935
+오분류,fitness_703278fa1b8bba415b118990,images/val/fitness_703278fa1b8bba415b118990.jpg,clip_777bd689029a93cbf61e22f4,Z23,B,31,269,2,덤벨 벤트오버 로우,7,바벨 데드리프트,0.9923787,0.0022830672
+오분류,fitness_b0c8e772012657a6f5586734,images/val/fitness_b0c8e772012657a6f5586734.jpg,clip_52d493013b8de867021eeddb,Z23,E,11,278,2,덤벨 벤트오버 로우,8,바벨 런지,0.7717399,0.18582763
+오분류,fitness_c61dd861119372f7de965b0f,images/val/fitness_c61dd861119372f7de965b0f.jpg,clip_5b1ff326dfd38b2478496cf3,Z23,B,31,261,2,덤벨 벤트오버 로우,7,바벨 데드리프트,0.99180627,0.0015170075
+오분류,fitness_de18139bc6afed7c6245d5da,images/val/fitness_de18139bc6afed7c6245d5da.jpg,clip_f9201f820609de7bc3d11992,Z23,B,11,308,7,바벨 데드리프트,9,바벨 로우,0.9870253,0.00910796
+오분류,fitness_ecdb97e96d20bc9a9450bcf0,images/val/fitness_ecdb97e96d20bc9a9450bcf0.jpg,clip_d3b1a3509ad82cc13cf3e301,Z23,A,13,285,7,바벨 데드리프트,2,덤벨 벤트오버 로우,0.9756864,0.0042909384
+오분류,fitness_ce6423d6f7220f59a1c8d431,images/val/fitness_ce6423d6f7220f59a1c8d431.jpg,clip_232741a9a8eed0689bac58eb,Z23,E,31,292,7,바벨 데드리프트,2,덤벨 벤트오버 로우,0.92770714,0.051225204
+오분류,fitness_e0e6f6a708c02dce3963d2ed,images/val/fitness_e0e6f6a708c02dce3963d2ed.jpg,clip_0b32373f4ff8e2269bd4c063,Z23,D,1,302,7,바벨 데드리프트,2,덤벨 벤트오버 로우,0.83620673,0.1165328
+오분류,fitness_804a2363fa62100d47df81e4,images/val/fitness_804a2363fa62100d47df81e4.jpg,clip_aa3624400fe1c32789ef25b2,Z23,B,29,294,7,바벨 데드리프트,9,바벨 로우,0.9869704,0.009116353
+오분류,fitness_e2646a2c51d5c8bdfa1bbfd5,images/val/fitness_e2646a2c51d5c8bdfa1bbfd5.jpg,clip_e740a81edffa2815acf21587,Z23,A,1,303,7,바벨 데드리프트,9,바벨 로우,0.9527124,0.009487148
+오분류,fitness_c0985fb29d73094677be09f7,images/val/fitness_c0985fb29d73094677be09f7.jpg,clip_c888cda576897e6d2944d8cb,Z23,E,5,282,7,바벨 데드리프트,2,덤벨 벤트오버 로우,0.90477824,0.059154395
+오분류,fitness_7a08236c48a7328e64d943e7,images/val/fitness_7a08236c48a7328e64d943e7.jpg,clip_6fbf93532b8d36306745ac3d,Z23,D,3,311,7,바벨 데드리프트,2,덤벨 벤트오버 로우,0.825387,0.10230533
+오분류,fitness_66ebf68d9722fb960d9c4d22,images/val/fitness_66ebf68d9722fb960d9c4d22.jpg,clip_7d0f2d5f2337a9f0daa0bfb2,Z23,C,11,246,9,바벨 로우,7,바벨 데드리프트,0.9996791,0.0001927428
+오분류,fitness_94fbc4dd2e86bbaa263ea893,images/val/fitness_94fbc4dd2e86bbaa263ea893.jpg,clip_f299bba2dca84ba63710b60d,Z23,E,11,241,9,바벨 로우,7,바벨 데드리프트,0.9966568,0.0017928182
+오분류,fitness_8aea2e5bf07c1edffc2aace1,images/val/fitness_8aea2e5bf07c1edffc2aace1.jpg,clip_5dc43a62e1908816cf30ffd2,Z23,D,21,243,9,바벨 로우,8,바벨 런지,0.9830799,0.00094223086
+오분류,fitness_17928a31ff38a00263fc15a6,images/val/fitness_17928a31ff38a00263fc15a6.jpg,clip_a68ba561065e73815f704b33,Z23,C,19,242,9,바벨 로우,7,바벨 데드리프트,0.9887997,0.0011560709
+오분류,fitness_14d2843066bf50692c7e9c08,images/val/fitness_14d2843066bf50692c7e9c08.jpg,clip_4061b3ebaf156dab5a2f41f0,Z23,D,11,247,9,바벨 로우,7,바벨 데드리프트,0.93829006,0.01648672
+오분류,fitness_f88d7cba3c5578dad6564f4d,images/val/fitness_f88d7cba3c5578dad6564f4d.jpg,clip_794731d524c333358c49a8f2,Z23,C,29,244,9,바벨 로우,7,바벨 데드리프트,0.98765033,0.0033364221
+오분류,fitness_99f401b397c249bcbce41e32,images/val/fitness_99f401b397c249bcbce41e32.jpg,clip_3fd2f60950a427762dd07cec,Z23,D,21,245,9,바벨 로우,8,바벨 런지,0.8743089,0.01738676
+오분류,fitness_cbe7bdc6c344242815f82e23,images/val/fitness_cbe7bdc6c344242815f82e23.jpg,clip_c615a9ee9be9d3dae56b89f3,Z23,D,1,248,9,바벨 로우,2,덤벨 벤트오버 로우,0.8079013,0.07760769
+오분류,fitness_4c68b8162cb66e8ef22867cf,images/val/fitness_4c68b8162cb66e8ef22867cf.jpg,clip_21fa700ad136404900ea9e96,Z23,C,9,359,8,바벨 런지,2,덤벨 벤트오버 로우,0.92653084,0.015423099
+오분류,fitness_7bd06f920b8c8de5315221d4,images/val/fitness_7bd06f920b8c8de5315221d4.jpg,clip_c9fc550999a06217609d0c96,Z23,A,31,360,8,바벨 런지,2,덤벨 벤트오버 로우,0.89199007,0.006027815
+오분류,fitness_12af99991ad5614413a12e33,images/val/fitness_12af99991ad5614413a12e33.jpg,clip_28dac7acbaef8f1b7c0a25f9,Z23,C,11,336,8,바벨 런지,2,덤벨 벤트오버 로우,0.9077912,0.08394443
+오분류,fitness_53dbf7309a0c7aad04989d22,images/val/fitness_53dbf7309a0c7aad04989d22.jpg,clip_14bf61c12867b5e9db1f7e0d,Z23,A,31,334,8,바벨 런지,9,바벨 로우,0.46099576,0.22731975
+오분류,fitness_14624d5a099e1b6a8df8521f,images/val/fitness_14624d5a099e1b6a8df8521f.jpg,clip_cfc7ce9097a57fa331e717f5,Z23,C,21,351,8,바벨 런지,2,덤벨 벤트오버 로우,0.81523705,0.14817601
+오분류,fitness_641d67a0d27e4d7d2f95ca25,images/val/fitness_641d67a0d27e4d7d2f95ca25.jpg,clip_737f15782219e7db1dec9abf,Z62,B,21,488,4,라잉 레그 레이즈,10,바이시클 크런치,0.9977877,0.0018614595
+오분류,fitness_33c5d3416c7c6db308f9dc6a,images/val/fitness_33c5d3416c7c6db308f9dc6a.jpg,clip_69b123cf5ae84813ef5a8921,Z62,E,31,484,4,라잉 레그 레이즈,10,바이시클 크런치,0.90224195,0.09491005
+오분류,fitness_6ec9e5afd138c0f7a5d373b1,images/val/fitness_6ec9e5afd138c0f7a5d373b1.jpg,clip_8f8a1b3809b9f78a1ec1206d,Z62,A,11,476,4,라잉 레그 레이즈,10,바이시클 크런치,0.6601923,0.27628624
+오분류,fitness_763f94bc5938d60bc2e0cb82,images/val/fitness_763f94bc5938d60bc2e0cb82.jpg,clip_35f2609317a412bd67c295fc,Z62,E,1,481,4,라잉 레그 레이즈,10,바이시클 크런치,0.74469155,0.24653436
+오분류,fitness_c4251e9450f1bfc9f9112115,images/val/fitness_c4251e9450f1bfc9f9112115.jpg,clip_fde852ff38942c06244d6f93,Z62,D,31,512,10,바이시클 크런치,4,라잉 레그 레이즈,0.95487136,0.041384432
+오분류,fitness_70ac02f7aab6bed1e4dd6bfe,images/val/fitness_70ac02f7aab6bed1e4dd6bfe.jpg,clip_de40f822179ddb009dd9728e,Z62,D,21,507,10,바이시클 크런치,0,Y - Exercise,0.9398333,0.05427914
+오분류,fitness_1328c6ecc9697549f77e3163,images/val/fitness_1328c6ecc9697549f77e3163.jpg,clip_90f35fab46a43b06703c71d6,Z62,D,11,505,10,바이시클 크런치,4,라잉 레그 레이즈,0.9274577,0.06850991
+오분류,fitness_83f3b159ec39ee14fd551af0,images/val/fitness_83f3b159ec39ee14fd551af0.jpg,clip_921f40ccbe64d89175065aaa,Z62,D,21,509,10,바이시클 크런치,4,라잉 레그 레이즈,0.6046265,0.38207868
+오분류,fitness_628a7312215ba01b25d6834b,images/val/fitness_628a7312215ba01b25d6834b.jpg,clip_3f9afa805d5e80cbcf922aa6,Z62,E,31,632,0,Y - Exercise,4,라잉 레그 레이즈,0.9923637,0.0044585173
+오분류,fitness_ae1dec45b1f396bea37ad8dd,images/val/fitness_ae1dec45b1f396bea37ad8dd.jpg,clip_f72083294733d3e6ab0b3bae,Z89,A,31,752,5,랫풀 다운,11,케이블 크런치,0.99894744,0.000112686954
+오분류,fitness_29b7334f6a238e6be71a33f6,images/val/fitness_29b7334f6a238e6be71a33f6.jpg,clip_5f8681a62305658c7f0c8327,Z89,C,21,766,11,케이블 크런치,5,랫풀 다운,0.62204075,0.3284333
+정답,fitness_5a0116271f3282a8a05257e2,images/val/fitness_5a0116271f3282a8a05257e2.jpg,clip_7fc0c4aae242bf7916f6a0a0,Z62,D,31,626,0,Y - Exercise,0,Y - Exercise,0.9999989,0.9999989
+정답,fitness_0628efa64b750003da2a5b4f,images/val/fitness_0628efa64b750003da2a5b4f.jpg,clip_0d12a88748516dc810363591,Z62,A,1,599,1,니푸쉬업,1,니푸쉬업,1.0,1.0
+정답,fitness_e74650115b9d38fe80f6c785,images/val/fitness_e74650115b9d38fe80f6c785.jpg,clip_2867f6eb1ee201a9a7612882,Z23,B,19,271,2,덤벨 벤트오버 로우,2,덤벨 벤트오버 로우,0.99713504,0.99713504
+정답,fitness_e623ddd641b58a121cbcfe3d,images/val/fitness_e623ddd641b58a121cbcfe3d.jpg,clip_239585909d701160243c16bd,Z23,E,21,250,2,덤벨 벤트오버 로우,2,덤벨 벤트오버 로우,0.9948441,0.9948441
+정답,fitness_d3a9fa103cbc8949c750ab08,images/val/fitness_d3a9fa103cbc8949c750ab08.jpg,clip_6ffce42c35d796122ce6ed59,Z89,A,5,703,3,딥스,3,딥스,0.9999999,0.9999999
+정답,fitness_e330f6296bd5bc0184953530,images/val/fitness_e330f6296bd5bc0184953530.jpg,clip_a3885a5e6cd30ddf7e146d8c,Z62,E,1,483,4,라잉 레그 레이즈,4,라잉 레그 레이즈,0.99999666,0.99999666
+정답,fitness_2dbb2fb8d4876b499248e64b,images/val/fitness_2dbb2fb8d4876b499248e64b.jpg,clip_fc80b3a99495460ea0e0fff5,Z89,E,1,745,5,랫풀 다운,5,랫풀 다운,0.9999974,0.9999974
+정답,fitness_6fcb3c466941d8955f23459a,images/val/fitness_6fcb3c466941d8955f23459a.jpg,clip_25dff3f6a9a571d413390dda,Z89,A,11,804,6,로잉머신,6,로잉머신,0.9999976,0.9999976
+정답,fitness_a85446eb82d6318030b7ebb8,images/val/fitness_a85446eb82d6318030b7ebb8.jpg,clip_10345a7fb168e16837e32d85,Z23,A,1,295,7,바벨 데드리프트,7,바벨 데드리프트,0.9818283,0.9818283
+정답,fitness_4c164cd291b713e351dd8b90,images/val/fitness_4c164cd291b713e351dd8b90.jpg,clip_092d3eb72ec1ba77f1b6ca9b,Z23,B,5,300,7,바벨 데드리프트,7,바벨 데드리프트,0.9997429,0.9997429
+정답,fitness_6246d4ec4bd6e5bc4892cbaf,images/val/fitness_6246d4ec4bd6e5bc4892cbaf.jpg,clip_567be38c44be458a84d1bc65,Z23,C,21,341,8,바벨 런지,8,바벨 런지,0.9996909,0.9996909
+정답,fitness_4dbec7756ce02f88ca11f370,images/val/fitness_4dbec7756ce02f88ca11f370.jpg,clip_a68ba561065e73815f704b33,Z23,B,11,242,9,바벨 로우,9,바벨 로우,0.9867208,0.9867208
+정답,fitness_1362572f58993286f9cf6268,images/val/fitness_1362572f58993286f9cf6268.jpg,clip_3fd2f60950a427762dd07cec,Z23,E,21,245,9,바벨 로우,9,바벨 로우,0.9219729,0.9219729
+정답,fitness_1fc1eeeb26b3083c9c73d779,images/val/fitness_1fc1eeeb26b3083c9c73d779.jpg,clip_f3085e53ec79b81b6bb1c7c4,Z62,D,11,506,10,바이시클 크런치,10,바이시클 크런치,0.9907194,0.9907194
+정답,fitness_a9480c8976d4fcfd28f935e6,images/val/fitness_a9480c8976d4fcfd28f935e6.jpg,clip_5d8b7d1e5636778636847a31,Z89,C,11,767,11,케이블 크런치,11,케이블 크런치,0.9691732,0.9691732

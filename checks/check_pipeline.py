@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from common import DATA_RAW  # noqa: E402
-from dataset import PAD_FILL, FitnessDataset, Letterbox, build_transforms, load_split, make_loaders, set_reproducible, augment_preset, balanced_class_weights  # noqa: E402
+from dataset import IMAGENET_MEAN as IMAGENET_MEAN_T, IMAGENET_STD as IMAGENET_STD_T, PAD_FILL, FitnessDataset, Letterbox, build_transforms, load_split, make_loaders, set_reproducible, augment_preset, balanced_class_weights  # noqa: E402
 import os  # noqa: E402
 from metrics import evaluate, summarize  # noqa: E402
 from models import build_model, count_params, param_groups, set_train_mode  # noqa: E402
@@ -150,6 +150,44 @@ cnt = tr["target_id"].value_counts().reindex(range(12)).to_numpy()
 check(abs(float((w.numpy() * cnt).sum()) - len(tr)) < 1e-2, f"Σ n_c·w_c = N(8,144): 손실 크기 보존")
 check(int(w.argmax()) == int(cnt.argmin()) and int(w.argmin()) == int(cnt.argmax()),
       f"가장 적은 클래스 가중치 최대({w.max():.2f}), 가장 많은 클래스 최소({w.min():.2f})")
+
+# 5d. 전처리 방식(P1 시리즈): 모양과 내용
+from dataset import PREPROCESS, preprocess_ops  # noqa: E402
+arr = np.asarray(img)
+check(arr.shape == (216, 384, 3), "원본 384×216")
+shapes = {name: tuple(build_transforms(preprocess=name)[1](img).shape) for name in PREPROCESS}
+check(shapes == {"letterbox": (3, 224, 224), "stretch": (3, 224, 224), "aspect": (3, 126, 224), "ccrop": (3, 224, 224),
+                 "gray": (3, 224, 224)}, f"전처리별 텐서 모양 {shapes}")
+check(tuple(build_transforms(384, preprocess="aspect")[1](img).shape) == (3, 216, 384), "aspect 384 = 원본 크기 384×216")
+check(np.array_equal(np.asarray(preprocess_ops("aspect", 384)[0](img)), arr), "aspect 384는 원본 픽셀 그대로(크기 변경 없음)")
+check(np.array_equal(np.asarray(preprocess_ops("aspect", 224)[0](img)), lb[49:175]), "aspect 224 = letterbox 224의 내용 영역(패딩만 없음)")
+cc = preprocess_ops("ccrop")[0](img)
+check(cc.size == (216, 216) and np.array_equal(np.asarray(cc), arr[:, 84:300]), "ccrop: 가운데 216×216(가로 84~299)")
+g = build_transforms(preprocess="gray")[1](img)
+gu = g * torch.tensor(IMAGENET_STD_T).view(3, 1, 1) + torch.tensor(IMAGENET_MEAN_T).view(3, 1, 1)
+check(torch.allclose(gu[0], gu[1], atol=1e-5) and torch.allclose(gu[1], gu[2], atol=1e-5), "gray: 정규화 전 세 채널이 같음")
+check(torch.equal(build_transforms(preprocess="letterbox")[1](img), build_transforms()[1](img)), "preprocess 기본값 = letterbox(기존과 같음)")
+pre_loaders = make_loaders(num_workers=0, preprocess="aspect")
+check(tuple(next(iter(pre_loaders["val"]))[0].shape) == (32, 3, 126, 224), "aspect 배치 32×3×126×224(정사각형 아님)")
+mm = build_model("full", pretrained=False).to(device).eval()
+with torch.no_grad():
+    check(tuple(mm(torch.zeros(2, 3, 216, 384, device=device)).shape) == (2, 12), "ResNet18이 384×216 입력도 받음(평균 풀링)")
+
+# 5e. 사람 단위 교차검증(D-037)
+from dataset import load_cv  # noqa: E402
+seen = []
+for f in (1, 2, 3):
+    ctr, cva = load_cv(f)
+    check(not set(ctr.person_id) & set(cva.person_id) and len(ctr) + len(cva) == 8144 + 1440, f"CV fold {f}: 사람 겹침 없음, 합계 9,584장")
+    check(not set(ctr.split) - {"train", "val"} and not set(cva.split) - {"train", "val"}, f"CV fold {f}: Test 행 없음")
+    seen += list(cva.image_id)
+check(len(seen) == len(set(seen)) == 9584, "세 fold의 검증을 합치면 모든 이미지가 정확히 한 번")
+cl = make_loaders(num_workers=0, cv_fold=2)
+check(len(cl["val"].dataset) == len(load_cv(2)[1]) and "test" not in cl, "make_loaders(cv_fold=2): val = fold 2 검증, Test 없음")
+try:
+    make_loaders(num_workers=0, cv_fold=1, allow_test=True); check(False, "CV에서 Test 거부")
+except ValueError:
+    check(True, "CV에서 allow_test=True는 거부")
 
 # 6. 재현성 설정(독립검증 ② 지적 반영)
 check(os.environ.get("CUBLAS_WORKSPACE_CONFIG") == ":4096:8", "common import 때 CUBLAS_WORKSPACE_CONFIG 설정")

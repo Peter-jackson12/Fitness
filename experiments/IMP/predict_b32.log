@@ -1,0 +1,15 @@
+CV1-letterbox-f1__train.csv: 3352장, Macro F1 0.8193, 6.2s
+CV1-letterbox-f2__train.csv: 2872장, Macro F1 0.8730, 4.3s
+CV1-letterbox-f3__train.csv: 3360장, Macro F1 0.8423, 5.0s
+CV1-letterbox-f1__gray.csv: 3352장, Macro F1 0.5979, 5.5s
+CV1-letterbox-f2__gray.csv: 2872장, Macro F1 0.6876, 4.7s
+CV1-letterbox-f3__gray.csv: 3360장, Macro F1 0.6502, 5.6s
+CV1-ccrop-f1__train.csv: 3352장, Macro F1 0.9009, 5.0s
+CV1-ccrop-f2__train.csv: 2872장, Macro F1 0.8759, 4.5s
+CV1-ccrop-f3__train.csv: 3360장, Macro F1 0.8649, 5.7s
+CV1-gray-f1__train.csv: 3352장, Macro F1 0.8346, 6.3s
+CV1-gray-f2__train.csv: 2872장, Macro F1 0.8579, 5.4s
+CV1-gray-f3__train.csv: 3360장, Macro F1 0.8447, 6.3s
+E04__train.csv: 1440장, Macro F1 0.8581, 2.5s
+SEL-A-s43__train.csv: 1440장, Macro F1 0.8782, 2.5s
+SEL-A-s44__train.csv: 1440장, Macro F1 0.8845, 2.4s

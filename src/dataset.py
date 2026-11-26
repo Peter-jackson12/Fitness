@@ -49,6 +49,60 @@ class Letterbox:
         return f"Letterbox(size={self.size}, fill={self.fill})"
 
 
+class AspectResize:
+    """비율을 유지해 긴 변만 `size`로 맞춘다. 패딩하지 않으므로 정사각형이 아니다(384×216 → 224×126)."""
+
+    def __init__(self, size: int = 224, interpolation=Image.Resampling.BILINEAR):
+        self.size = size
+        self.interpolation = interpolation
+
+    def __call__(self, img: Image.Image) -> Image.Image:
+        w, h = img.size
+        scale = self.size / max(w, h)
+        nw, nh = round(w * scale), round(h * scale)
+        return img if (nw, nh) == (w, h) else img.resize((nw, nh), self.interpolation)
+
+    def __repr__(self) -> str:
+        return f"AspectResize(size={self.size})"
+
+
+class SquareCenterCrop:
+    """짧은 변 길이의 정사각형을 가운데에서 잘라 낸다(384×216 → 가운데 216×216)."""
+
+    def __call__(self, img: Image.Image) -> Image.Image:
+        w, h = img.size
+        s = min(w, h)
+        left, top = (w - s) // 2, (h - s) // 2
+        return img.crop((left, top, left + s, top + s))
+
+    def __repr__(self) -> str:
+        return "SquareCenterCrop()"
+
+
+# 전처리 방식(P1 시리즈). 모두 원본 384×216 PIL 이미지에 적용하고, 그 뒤에 ToTensor·ImageNet 정규화가 붙는다.
+PREPROCESS = ("letterbox", "stretch", "aspect", "ccrop", "gray")
+
+
+def preprocess_ops(name: str = "letterbox", size: int = 224) -> list:
+    """- letterbox: 비율 유지 + 평균색 패딩으로 size×size(기본, D-011)
+    - stretch: 비율 무시하고 size×size로 늘림
+    - aspect: 비율 유지, 긴 변만 size(패딩 없음, 정사각형 아님)
+    - ccrop: 가운데 정사각형(216×216)을 잘라 size×size
+    - gray: letterbox 뒤 흑백으로 바꾸고 3채널로 복제(사전학습 모델 입력 모양 유지)
+    """
+    if name == "letterbox":
+        return [Letterbox(size)]
+    if name == "stretch":
+        return [T.Resize((size, size), interpolation=T.InterpolationMode.BILINEAR)]
+    if name == "aspect":
+        return [AspectResize(size)]
+    if name == "ccrop":
+        return [SquareCenterCrop(), T.Resize((size, size), interpolation=T.InterpolationMode.BILINEAR)]
+    if name == "gray":
+        return [Letterbox(size), T.Grayscale(num_output_channels=3)]
+    raise ValueError(f"알 수 없는 전처리: {name} (가능: {PREPROCESS})")
+
+
 def augment_preset(name: str | None) -> list | None:
     """이름으로 고르는 Train 전용 증강(PIL 원본 384×216에 letterbox 전에 적용).
 
@@ -75,13 +129,14 @@ def balanced_class_weights(train_pct: int = 100, num_classes: int = 12) -> torch
     return torch.tensor(n.sum() / (num_classes * n), dtype=torch.float32)
 
 
-def build_transforms(size: int = 224, train_augment: list | None = None) -> tuple[T.Compose, T.Compose]:
+def build_transforms(size: int = 224, train_augment: list | None = None,
+                     preprocess: str = "letterbox") -> tuple[T.Compose, T.Compose]:
     """(train_tf, eval_tf)를 돌려준다.
 
     기본 학습(D-011)은 `train_augment=None`이라 두 변환이 같다. 증강은 튜닝·개선 단계에서
     PIL 이미지에 적용할 변환 목록으로 넘기고, letterbox 앞에 붙는다. eval 변환에는 절대 붙지 않는다.
     """
-    tail = [Letterbox(size), T.ToTensor(), T.Normalize(IMAGENET_MEAN, IMAGENET_STD)]
+    tail = [*preprocess_ops(preprocess, size), T.ToTensor(), T.Normalize(IMAGENET_MEAN, IMAGENET_STD)]
     eval_tf = T.Compose(tail)
     train_tf = T.Compose([*(train_augment or []), *tail])
     return train_tf, eval_tf
@@ -96,6 +151,22 @@ def load_split(split: str, train_pct: int = 100) -> pd.DataFrame:
     csv = DATA_RAW / f"metadata_train_{train_pct}pct.csv"
     md = pd.read_csv(csv, encoding="utf-8-sig")
     return md[md["split"] == split].reset_index(drop=True)
+
+
+CV_FOLDS = DATA_RAW.parent / "splits" / "cv3_folds.csv"  # 사람 단위 3-fold(D-037, src/make_cv_folds.py)
+
+
+def load_cv(fold: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """사람 단위 교차검증 fold의 (학습, 검증) 메타데이터. 공식 Train(100%) + Val의 19명만 쓰고 Test는 넣지 않는다."""
+    if fold not in (1, 2, 3):
+        raise ValueError(f"fold는 1·2·3 중 하나: {fold}")
+    folds = pd.read_csv(CV_FOLDS)
+    d = pd.concat([load_split("train", 100), load_split("val", 100)], ignore_index=True)
+    d = d.merge(folds[["person_id", "fold"]], on="person_id", how="left", validate="many_to_one")
+    if d["fold"].isna().any():
+        raise RuntimeError("fold가 없는 사람이 있다(cv3_folds.csv 확인)")
+    return (d[d["fold"] != fold].drop(columns="fold").reset_index(drop=True),
+            d[d["fold"] == fold].drop(columns="fold").reset_index(drop=True))
 
 
 class FitnessDataset(Dataset):
@@ -143,15 +214,22 @@ def _worker_init(worker_id: int) -> None:
 
 
 def make_loaders(train_pct: int = 100, batch_size: int = 32, num_workers: int = 2, eval_workers: int = 0,
-                 seed: int = 42, size: int = 224, train_augment: list | None = None, allow_test: bool = False) -> dict:
+                 seed: int = 42, size: int = 224, train_augment: list | None = None, allow_test: bool = False,
+                 preprocess: str = "letterbox", cv_fold: int | None = None) -> dict:
     """train·val(·test) DataLoader를 만든다. train만 섞는다.
 
     Windows에서는 worker마다 torch·CUDA DLL을 새로 올려서 프로세스당 약 2.5GB의 가상 메모리를 잡는다.
     worker를 train 4 + val 4개 띄웠을 때 페이징 파일 부족(WinError 1455)으로 죽었다(E00 1차 시도).
     그래서 train만 worker 2개, Val·Test는 main 프로세스에서 읽는다(Val 1,440장은 약 2초).
     """
-    train_tf, eval_tf = build_transforms(size, train_augment)
-    frames = {"train": load_split("train", train_pct), "val": load_split("val", train_pct)}
+    train_tf, eval_tf = build_transforms(size, train_augment, preprocess)
+    if cv_fold is not None:  # 사람 단위 교차검증: "val"은 그 fold의 검증 사람들
+        if allow_test or train_pct != 100:
+            raise ValueError("교차검증은 Train 100%만 쓰고 Test를 만들지 않는다")
+        cv_tr, cv_va = load_cv(cv_fold)
+        frames = {"train": cv_tr, "val": cv_va}
+    else:
+        frames = {"train": load_split("train", train_pct), "val": load_split("val", train_pct)}
     if allow_test:
         frames["test"] = load_split("test", train_pct)
     g = torch.Generator()

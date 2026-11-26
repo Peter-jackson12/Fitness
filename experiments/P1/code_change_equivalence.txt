@@ -1,0 +1,10 @@
+# P1 실행 중 코드 수정(CV 옵션 추가) 전후 동일성 검사(2026-11-26)
+대상: 수정 뒤 코드로 돈 P1-gray-s43·s44(config에 cv_fold 키 있음). 그 전 실행은 수정 전 코드.
+방법: 수정 전 dataset.py(CV 부분을 되돌린 사본)와 현재 dataset.py로 gray 224 loader를 만들어 지문 비교.
+항목: Train·Val 행(경로+라벨), Train 1 epoch 라벨 순서(seed별 셔플), Train 첫 5배치 텐서, Val 전체 텐서. num_workers=0(증강 없음이라 worker 수는 순서·값에 영향 없음).
+결과(앞 줄 수정 전, 뒷 줄 수정 후):
+43 {'train_rows': '37d4b041205bd67f', 'val_rows': '71eb786b17a8812c', 'train_label_order(전체 epoch1)': '4a6988d3d208b571', 'train_first5_batches': '866e418e039f41f1', 'val_all_tensors': '9dc317d9a931f3b0'}
+43 {'train_rows': '37d4b041205bd67f', 'val_rows': '71eb786b17a8812c', 'train_label_order(전체 epoch1)': '4a6988d3d208b571', 'train_first5_batches': '866e418e039f41f1', 'val_all_tensors': '9dc317d9a931f3b0'}
+44 {'train_rows': '37d4b041205bd67f', 'val_rows': '71eb786b17a8812c', 'train_label_order(전체 epoch1)': 'd5d977f71b42e371', 'train_first5_batches': 'c0814755c25c28bd', 'val_all_tensors': '9dc317d9a931f3b0'}
+44 {'train_rows': '37d4b041205bd67f', 'val_rows': '71eb786b17a8812c', 'train_label_order(전체 epoch1)': 'd5d977f71b42e371', 'train_first5_batches': 'c0814755c25c28bd', 'val_all_tensors': '9dc317d9a931f3b0'}
+결론: seed 43·44 모두 모든 항목 일치. run_experiment.py 변경은 config에 cv_fold·cv_folds_sha256(null) 기록뿐. P1 재실행 불필요.
