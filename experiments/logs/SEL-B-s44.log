@@ -1,0 +1,21 @@
+[full] epoch  1/50 | train loss 0.4689 acc 0.8174 | val loss 0.4790 acc 0.8104 F1 0.7449 * | 25.3s + 2.2s
+[full] epoch  2/50 | train loss 0.2338 acc 0.9132 | val loss 0.4016 acc 0.8562 F1 0.8294 * | 9.0s + 2.1s
+[full] epoch  3/50 | train loss 0.1892 acc 0.9283 | val loss 0.3672 acc 0.8694 F1 0.8410 * | 8.9s + 2.1s
+[full] epoch  4/50 | train loss 0.1642 acc 0.9409 | val loss 0.5595 acc 0.8458 F1 0.8048 | 9.1s + 2.2s
+[full] epoch  5/50 | train loss 0.1388 acc 0.9478 | val loss 0.4610 acc 0.8535 F1 0.8325 | 8.9s + 2.1s
+[full] epoch  6/50 | train loss 0.1280 acc 0.9527 | val loss 0.3621 acc 0.8889 F1 0.8481 * | 9.1s + 2.1s
+[full] epoch  7/50 | train loss 0.1020 acc 0.9630 | val loss 0.3867 acc 0.8736 F1 0.8426 | 9.1s + 2.1s
+[full] epoch  8/50 | train loss 0.0984 acc 0.9629 | val loss 0.3549 acc 0.8799 F1 0.8515 * | 9.4s + 2.1s
+[full] epoch  9/50 | train loss 0.0956 acc 0.9671 | val loss 0.4129 acc 0.8424 F1 0.8324 | 9.2s + 2.2s
+[full] epoch 10/50 | train loss 0.0771 acc 0.9714 | val loss 0.5320 acc 0.8778 F1 0.8375 | 9.1s + 2.2s
+[full] epoch 11/50 | train loss 0.0849 acc 0.9710 | val loss 0.5408 acc 0.8153 F1 0.8036 | 9.3s + 2.1s
+[full] epoch 12/50 | train loss 0.0841 acc 0.9697 | val loss 0.4009 acc 0.8660 F1 0.8386 | 9.1s + 2.2s
+[full] epoch 13/50 | train loss 0.0682 acc 0.9748 | val loss 0.4035 acc 0.8965 F1 0.8518 * | 9.1s + 2.2s
+[full] epoch 14/50 | train loss 0.0604 acc 0.9770 | val loss 0.3310 acc 0.8938 F1 0.8661 * | 9.1s + 2.2s
+[full] epoch 15/50 | train loss 0.0620 acc 0.9770 | val loss 0.4951 acc 0.8479 F1 0.8374 | 9.2s + 2.3s
+[full] epoch 16/50 | train loss 0.0608 acc 0.9777 | val loss 0.5346 acc 0.8458 F1 0.8215 | 9.3s + 2.2s
+[full] epoch 17/50 | train loss 0.0543 acc 0.9804 | val loss 0.3867 acc 0.8826 F1 0.8483 | 9.4s + 2.3s
+[full] epoch 18/50 | train loss 0.0516 acc 0.9815 | val loss 0.4705 acc 0.8632 F1 0.8306 | 9.3s + 2.3s
+[full] epoch 19/50 | train loss 0.0548 acc 0.9821 | val loss 0.3693 acc 0.8854 F1 0.8586 | 9.2s + 2.3s
+[full] Early stopping: 5 epoch 연속 개선 없음. 최고 epoch 14
+{"strategy": "full", "best_epoch": 14, "epochs_run": 19, "total_time_s": 231.73736209998606, "mean_train_epoch_s": 10.01515345262535, "peak_gpu_mem_mb": 628.712890625} val_macro_f1=0.8661

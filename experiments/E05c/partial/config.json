@@ -1,0 +1,41 @@
+{
+  "run_id": "E05c",
+  "strategy": "partial",
+  "train_pct": 100,
+  "batch_size": 32,
+  "max_epochs": 50,
+  "patience": 5,
+  "optimizer": "AdamW",
+  "lr_head": 0.001,
+  "lr_backbone": 0.0001,
+  "weight_decay": 0.0001,
+  "loss": "CrossEntropy",
+  "amp_fp16": true,
+  "input": "letterbox 224 (ImageNet 평균색 패딩) + ImageNet 정규화",
+  "augment": "basic",
+  "augment_detail": [
+    "RandomHorizontalFlip(p=0.5)",
+    "RandomAffine(degrees=[0.0, 0.0], translate=(0.05, 0.05), scale=(0.9, 1.1), fill=(124, 116, 104))"
+  ],
+  "seed": 42,
+  "num_workers_train": 2,
+  "num_workers_eval": 0,
+  "params": {
+    "total": 11182668,
+    "trainable": 8399884
+  },
+  "notes": "E05 1차: Partial + 증강 basic(PLAN.md)",
+  "env": {
+    "python": "3.14.7",
+    "torch": "2.14.1+cu130",
+    "torchvision": "0.29.1+cu130",
+    "cuda": "13.0",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "started_at": "2026-11-26 13:31:27"
+}

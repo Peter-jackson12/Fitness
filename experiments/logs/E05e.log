@@ -1,0 +1,38 @@
+[scratch] epoch  1/50 | train loss 0.9488 acc 0.5641 | val loss 0.8396 acc 0.5764 F1 0.4481 * | 26.7s + 2.1s
+[scratch] epoch  2/50 | train loss 0.7391 acc 0.6532 | val loss 1.2869 acc 0.5271 F1 0.3872 | 9.0s + 2.1s
+[scratch] epoch  3/50 | train loss 0.6349 acc 0.7133 | val loss 1.0390 acc 0.5986 F1 0.5223 * | 9.2s + 2.1s
+[scratch] epoch  4/50 | train loss 0.5410 acc 0.7569 | val loss 1.0693 acc 0.6403 F1 0.5457 * | 9.4s + 2.1s
+[scratch] epoch  5/50 | train loss 0.4679 acc 0.7949 | val loss 1.9427 acc 0.4993 F1 0.3901 | 9.5s + 2.1s
+[scratch] epoch  6/50 | train loss 0.4245 acc 0.8116 | val loss 0.7602 acc 0.6750 F1 0.5870 * | 9.6s + 2.1s
+[scratch] epoch  7/50 | train loss 0.3717 acc 0.8350 | val loss 0.6853 acc 0.7097 F1 0.6436 * | 9.5s + 2.1s
+[scratch] epoch  8/50 | train loss 0.3610 acc 0.8405 | val loss 0.5505 acc 0.7681 F1 0.7130 * | 9.5s + 2.1s
+[scratch] epoch  9/50 | train loss 0.3327 acc 0.8546 | val loss 0.6654 acc 0.7090 F1 0.6530 | 9.3s + 2.1s
+[scratch] epoch 10/50 | train loss 0.3235 acc 0.8609 | val loss 0.5751 acc 0.7479 F1 0.6986 | 9.6s + 2.1s
+[scratch] epoch 11/50 | train loss 0.3185 acc 0.8667 | val loss 1.1812 acc 0.7125 F1 0.6420 | 9.5s + 2.1s
+[scratch] epoch 12/50 | train loss 0.2926 acc 0.8821 | val loss 0.8708 acc 0.6965 F1 0.6518 | 9.4s + 2.1s
+[scratch] epoch 13/50 | train loss 0.2953 acc 0.8810 | val loss 0.7395 acc 0.7535 F1 0.6660 | 9.4s + 2.1s
+[scratch] epoch 14/50 | train loss 0.2892 acc 0.8797 | val loss 0.6071 acc 0.7688 F1 0.7086 | 9.6s + 2.1s
+[scratch] epoch 15/50 | train loss 0.2512 acc 0.9023 | val loss 0.5540 acc 0.7771 F1 0.7217 * | 9.5s + 2.1s
+[scratch] epoch 16/50 | train loss 0.2559 acc 0.8982 | val loss 0.4625 acc 0.8097 F1 0.7680 * | 9.6s + 2.2s
+[scratch] epoch 17/50 | train loss 0.2415 acc 0.9042 | val loss 0.6928 acc 0.7486 F1 0.6852 | 9.4s + 2.1s
+[scratch] epoch 18/50 | train loss 0.2333 acc 0.9084 | val loss 0.4607 acc 0.8264 F1 0.7700 * | 9.5s + 2.1s
+[scratch] epoch 19/50 | train loss 0.2212 acc 0.9156 | val loss 0.5417 acc 0.7972 F1 0.7396 | 9.6s + 2.1s
+[scratch] epoch 20/50 | train loss 0.2175 acc 0.9180 | val loss 0.6810 acc 0.7438 F1 0.6873 | 9.6s + 2.4s
+[scratch] epoch 21/50 | train loss 0.2266 acc 0.9139 | val loss 0.6159 acc 0.7632 F1 0.6883 | 9.6s + 2.3s
+[scratch] epoch 22/50 | train loss 0.2040 acc 0.9213 | val loss 0.9003 acc 0.7618 F1 0.6887 | 9.6s + 2.3s
+[scratch] epoch 23/50 | train loss 0.1959 acc 0.9252 | val loss 0.7076 acc 0.7528 F1 0.7077 | 9.5s + 2.2s
+[scratch] epoch 24/50 | train loss 0.2004 acc 0.9246 | val loss 0.5482 acc 0.8097 F1 0.7498 | 9.6s + 2.6s
+[scratch] epoch 25/50 | train loss 0.1849 acc 0.9310 | val loss 0.7924 acc 0.7458 F1 0.6786 | 9.6s + 2.5s
+[scratch] epoch 26/50 | train loss 0.1724 acc 0.9368 | val loss 0.4758 acc 0.8299 F1 0.7785 * | 9.3s + 3.2s
+[scratch] epoch 27/50 | train loss 0.1709 acc 0.9393 | val loss 0.5756 acc 0.7861 F1 0.7351 | 9.1s + 2.4s
+[scratch] epoch 28/50 | train loss 0.1570 acc 0.9441 | val loss 0.6955 acc 0.8097 F1 0.7610 | 9.1s + 2.3s
+[scratch] epoch 29/50 | train loss 0.1535 acc 0.9428 | val loss 0.8372 acc 0.7319 F1 0.6650 | 8.9s + 2.1s
+[scratch] epoch 30/50 | train loss 0.1486 acc 0.9447 | val loss 0.6229 acc 0.7847 F1 0.7353 | 9.0s + 2.2s
+[scratch] epoch 31/50 | train loss 0.1380 acc 0.9510 | val loss 0.7096 acc 0.7486 F1 0.6558 | 8.9s + 2.1s
+[scratch] epoch 32/50 | train loss 0.1452 acc 0.9498 | val loss 0.8668 acc 0.7688 F1 0.7114 | 9.2s + 2.3s
+[scratch] epoch 33/50 | train loss 0.1351 acc 0.9508 | val loss 0.5549 acc 0.7937 F1 0.7702 | 8.9s + 2.1s
+[scratch] epoch 34/50 | train loss 0.1349 acc 0.9511 | val loss 0.7793 acc 0.7507 F1 0.6901 | 9.0s + 2.3s
+[scratch] epoch 35/50 | train loss 0.1222 acc 0.9557 | val loss 0.8010 acc 0.7604 F1 0.6954 | 9.1s + 2.1s
+[scratch] epoch 36/50 | train loss 0.1202 acc 0.9557 | val loss 0.6452 acc 0.8174 F1 0.7694 | 8.9s + 2.4s
+[scratch] Early stopping: 10 epoch 연속 개선 없음. 최고 epoch 26
+{"strategy": "scratch", "best_epoch": 26, "epochs_run": 36, "total_time_s": 434.05416060000425, "mean_train_epoch_s": 9.823912441665824, "peak_gpu_mem_mb": 628.712890625} val_macro_f1=0.7785

@@ -1,0 +1,12 @@
+[scratch] epoch  1/2 | train loss 0.8605 acc 0.6138 | val loss 2.0717 acc 0.3347 F1 0.2656 * | 29.4s + 2.6s
+[scratch] epoch  2/2 | train loss 0.6004 acc 0.7307 | val loss 0.8417 acc 0.6118 F1 0.4603 * | 8.8s + 2.1s
+[fe] epoch  1/2 | train loss 0.9176 acc 0.6663 | val loss 0.7880 acc 0.6458 F1 0.5649 * | 22.7s + 2.1s
+[fe] epoch  2/2 | train loss 0.5601 acc 0.7839 | val loss 0.7183 acc 0.6861 F1 0.6064 * | 5.9s + 2.1s
+[partial] epoch  1/2 | train loss 0.4569 acc 0.8199 | val loss 0.4477 acc 0.8132 F1 0.7858 * | 22.9s + 2.7s
+[partial] epoch  2/2 | train loss 0.2042 acc 0.9225 | val loss 0.4923 acc 0.8160 F1 0.7750 | 6.5s + 2.3s
+[full] epoch  1/2 | train loss 0.4133 acc 0.8407 | val loss 0.3966 acc 0.8410 F1 0.8009 * | 26.0s + 2.2s
+[full] epoch  2/2 | train loss 0.1518 acc 0.9445 | val loss 0.3776 acc 0.8729 F1 0.8386 * | 8.4s + 2.1s
+{"strategy": "scratch", "best_epoch": 2, "epochs_run": 2, "total_time_s": 42.99653250002302, "mean_train_epoch_s": 19.112125350016868, "peak_gpu_mem_mb": 618.33740234375} val_macro_f1=0.4603
+{"strategy": "fe", "best_epoch": 2, "epochs_run": 2, "total_time_s": 32.82054039998911, "mean_train_epoch_s": 14.279011599981459, "peak_gpu_mem_mb": 237.41015625} val_macro_f1=0.6064
+{"strategy": "partial", "best_epoch": 1, "epochs_run": 2, "total_time_s": 34.33193720004056, "mean_train_epoch_s": 14.696525600011228, "peak_gpu_mem_mb": 333.96875} val_macro_f1=0.7858
+{"strategy": "full", "best_epoch": 2, "epochs_run": 2, "total_time_s": 38.67490879999241, "mean_train_epoch_s": 17.166634799999883, "peak_gpu_mem_mb": 618.775390625} val_macro_f1=0.8386

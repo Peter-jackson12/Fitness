@@ -1,0 +1,35 @@
+# 2026-11-26. 원본 이미지·가중치·데이터는 올리지 않는다(AI Hub 이용 조건, 용량).
+
+# 원본·가공 데이터(대용량). 분할 목록 CSV(data/splits/)는 올린다.
+data/raw/
+data/processed/
+*.zip
+
+# 모델 가중치·체크포인트
+models/
+*.pth
+*.pt
+*.ckpt
+
+# 비밀값·개인 설정
+.env
+.env.*
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Python·도구
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# OS
+Thumbs.db
+desktop.ini
+
+# 원본 데이터 이미지가 들어간 그림(AI Hub 이용 조건 확인 전까지 제외)
+figures/samples/
+
+# 사전학습 가중치 등 캐시
+.cache/

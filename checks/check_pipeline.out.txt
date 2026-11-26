@@ -1,0 +1,60 @@
+OK  letterbox 크기 (224, 224, 3)
+OK  위 49px·아래 49px가 패딩 색
+OK  내용 영역 126줄(49~174)에 패딩만 있는 줄이 없음
+OK  텐서 3×224×224
+OK  정규화 후 패딩 ≈ 0 (최대 0.0082)
+OK  letterbox 384: 원본 크기 그대로(384×216) + 위아래 84px 패딩
+OK  letterbox 384의 내용 영역 = 원본 픽셀 그대로
+OK  Train 8,144 / Val 1,440
+OK  25% Train 2036장, 100%의 부분집합
+OK  25% CSV의 Val = 100% Val
+OK  50% Train 4072장, 100%의 부분집합
+OK  50% CSV의 Val = 100% Val
+OK  person_id 분할 간 겹침 0
+OK  clip_id 분할 간 겹침 0
+OK  기본 loader에 Test 없음
+OK  allow_test=True일 때만 Test 1,432
+OK  기본 학습: train 변환 = eval 변환(증강 없음)
+OK  라벨 = target_id
+OK  배치 32×3×224×224, 라벨 int64
+OK  scratch: 학습 파라미터 11,182,668
+OK  scratch: lr 그룹 {'all': 0.001}
+OK  scratch: 옵티마이저가 학습 파라미터를 모두 받음
+OK  scratch: 고정 BN 0개가 eval
+OK  scratch: 학습 BN은 train
+OK  fe: 학습 파라미터 6,156
+OK  fe: lr 그룹 {'head': 0.001}
+OK  fe: 옵티마이저가 학습 파라미터를 모두 받음
+OK  fe: 고정 BN 20개가 eval
+OK  fe: 학습 BN은 train
+OK  fe: 한 스텝 뒤 고정 부분(가중치·BN 통계 120개) 그대로
+OK  fe: fc는 바뀜
+OK  partial: 학습 파라미터 8,399,884
+OK  partial: lr 그룹 {'head': 0.001, 'backbone': 0.0001}
+OK  partial: 옵티마이저가 학습 파라미터를 모두 받음
+OK  partial: 고정 BN 15개가 eval
+OK  partial: 학습 BN은 train
+OK  partial: 한 스텝 뒤 고정 부분(가중치·BN 통계 90개) 그대로
+OK  partial: fc는 바뀜
+OK  partial: layer4 BN 통계는 갱신됨
+OK  full: 학습 파라미터 11,182,668
+OK  full: lr 그룹 {'head': 0.001, 'backbone': 0.0001}
+OK  full: 옵티마이저가 학습 파라미터를 모두 받음
+OK  full: 고정 BN 0개가 eval
+OK  full: 학습 BN은 train
+OK  네 전략의 fc 초기값이 같음(seed 42)
+OK  summarize Macro F1 = sklearn(12클래스 고정) 0.2500
+OK  클래스별 12개, CM 합 = 샘플 수
+OK  evaluate 뒤 모델이 eval 모드
+OK  evaluate 출력 모양
+OK  evaluate Macro F1 = sklearn 직접 계산
+OK  AMP 평가 예측 ≈ fp32 예측(일치율 0.984)
+OK  증강을 켜도 Val 변환은 증강 없음과 같음
+OK  증강을 켜면 Train 이미지가 매번 달라짐(10회 중 10회)
+OK  augment none = 증강 없음
+OK  Σ n_c·w_c = N(8,144): 손실 크기 보존
+OK  가장 적은 클래스 가중치 최대(2.18), 가장 많은 클래스 최소(0.61)
+OK  common import 때 CUBLAS_WORKSPACE_CONFIG 설정
+OK  set_reproducible(True): cuDNN deterministic, benchmark 끔, 결정적 알고리즘 강제
+
+전체 통과: 58개 항목

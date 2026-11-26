@@ -1,0 +1,21 @@
+[scratch] epoch  1/50 | train loss 1.0319 acc 0.5419 | val loss 0.8298 acc 0.5813 F1 0.4736 * | 26.2s + 2.2s
+[scratch] epoch  2/50 | train loss 0.7396 acc 0.7003 | val loss 1.3558 acc 0.4674 F1 0.4429 | 9.4s + 2.2s
+[scratch] epoch  3/50 | train loss 0.5613 acc 0.7754 | val loss 0.6672 acc 0.7354 F1 0.7088 * | 9.7s + 2.2s
+[scratch] epoch  4/50 | train loss 0.4191 acc 0.8353 | val loss 0.8311 acc 0.6979 F1 0.6589 | 9.5s + 2.2s
+[scratch] epoch  5/50 | train loss 0.3246 acc 0.8724 | val loss 0.8690 acc 0.7167 F1 0.6856 | 9.6s + 2.2s
+[scratch] epoch  6/50 | train loss 0.2828 acc 0.8867 | val loss 0.7167 acc 0.7292 F1 0.6980 | 9.6s + 2.3s
+[scratch] epoch  7/50 | train loss 0.2572 acc 0.8973 | val loss 0.6560 acc 0.7535 F1 0.7239 * | 9.8s + 2.7s
+[scratch] epoch  8/50 | train loss 0.2207 acc 0.9147 | val loss 0.7366 acc 0.7576 F1 0.7249 * | 9.7s + 2.7s
+[scratch] epoch  9/50 | train loss 0.1751 acc 0.9350 | val loss 0.7805 acc 0.7514 F1 0.7258 * | 9.6s + 2.4s
+[scratch] epoch 10/50 | train loss 0.1361 acc 0.9531 | val loss 0.9336 acc 0.7472 F1 0.7089 | 9.6s + 2.5s
+[scratch] epoch 11/50 | train loss 0.0962 acc 0.9681 | val loss 0.9785 acc 0.7590 F1 0.7406 * | 9.7s + 2.4s
+[scratch] epoch 12/50 | train loss 0.0892 acc 0.9721 | val loss 1.3848 acc 0.7021 F1 0.6611 | 9.4s + 2.3s
+[scratch] epoch 13/50 | train loss 0.0774 acc 0.9742 | val loss 1.1204 acc 0.7188 F1 0.6828 | 9.6s + 2.4s
+[scratch] epoch 14/50 | train loss 0.0744 acc 0.9774 | val loss 1.0571 acc 0.7597 F1 0.7451 * | 9.4s + 2.4s
+[scratch] epoch 15/50 | train loss 0.0391 acc 0.9875 | val loss 0.9417 acc 0.7688 F1 0.7416 | 9.5s + 2.4s
+[scratch] epoch 16/50 | train loss 0.0533 acc 0.9849 | val loss 0.9872 acc 0.7514 F1 0.7342 | 9.5s + 2.3s
+[scratch] epoch 17/50 | train loss 0.0515 acc 0.9835 | val loss 1.3288 acc 0.7417 F1 0.7070 | 9.6s + 2.4s
+[scratch] epoch 18/50 | train loss 0.0458 acc 0.9867 | val loss 1.3333 acc 0.7424 F1 0.7269 | 9.6s + 2.3s
+[scratch] epoch 19/50 | train loss 0.0576 acc 0.9844 | val loss 1.0480 acc 0.7569 F1 0.7391 | 9.3s + 2.4s
+[scratch] Early stopping: 5 epoch 연속 개선 없음. 최고 epoch 14
+{"strategy": "scratch", "best_epoch": 14, "epochs_run": 19, "total_time_s": 243.22808809997514, "mean_train_epoch_s": 10.439693136839196, "peak_gpu_mem_mb": 628.71337890625} val_macro_f1=0.7451

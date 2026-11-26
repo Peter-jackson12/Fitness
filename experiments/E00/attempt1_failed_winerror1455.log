@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from multiprocessing.spawn import spawn_main; spawn_main(parent_pid=21416, pipe_handle=1832)
+                                                  ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\02_Team_Project\Image\.uv\python\cpython-3.14-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "C:\Projects\02_Team_Project\Image\.uv\python\cpython-3.14-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 131, in _main
+    prepare(preparation_data)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\02_Team_Project\Image\.uv\python\cpython-3.14-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 246, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\02_Team_Project\Image\.uv\python\cpython-3.14-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 297, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+                                  run_name="__mp_main__")
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Projects\02_Team_Project\Image\fitness\src\run_experiment.py", line 20, in <module>
+    import torch  # noqa: E402
+    ^^^^^^^^^^^^
+  File "C:\Projects\02_Team_Project\Image\fitness\.venv\Lib\site-packages\torch\__init__.py", line 309, in <module>
+    _load_dll_libraries()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Projects\02_Team_Project\Image\fitness\.venv\Lib\site-packages\torch\__init__.py", line 292, in _load_dll_libraries
+    raise err
+OSError: [WinError 1455] 이 작업을 완료하기 위한 페이징 파일이 너무 작습니다. Error loading "C:\Projects\02_Team_Project\Image\fitness\.venv\Lib\site-packages\torch\lib\cublas64_13.dll" or one of its dependencies.

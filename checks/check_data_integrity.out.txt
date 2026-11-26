@@ -1,0 +1,97 @@
+metadata.csv rows=11016 cols=['image_id', 'image_path', 'split', 'target_id', 'exercise', 'equipment', 'pose', 'person_id', 'source_subject_id', 'clip_id', 'state_code', 'camera', 'frame_no', 'width', 'height', 'file_size_bytes']
+
+## 1. 행·식별자
+image_id unique: True | image_path unique: True
+null counts (nonzero): {}
+split values: {'train': 8144, 'val': 1440, 'test': 1432}
+path prefix == images/<split>/: True
+
+## 2. 분할별 수치 vs 공식 표
+train got=(8144, 16, 1018) official=(8144, 16, 1018) match=True
+val   got=(1440, 3, 180) official=(1440, 3, 180) match=True
+test  got=(1432, 3, 179) official=(1432, 3, 179) match=True
+total classes: 12 | total persons: 22 | total clips: 1377
+classes per split: {'train': 12, 'val': 12, 'test': 12}
+
+## 3. 분할 간 겹침(누수)
+person_id          train∩val=0 train∩test=0 val∩test=0
+source_subject_id  train∩val=0 train∩test=0 val∩test=0
+clip_id            train∩val=0 train∩test=0 val∩test=0
+image_id           train∩val=0 train∩test=0 val∩test=0
+person_id == source_subject_id (all rows): True
+person_id with >1 source_subject_id: 0
+
+## 4. 클립 구성
+images per clip: {8: 1377}
+clips with >1 person_id: 0
+clips with >1 target_id: 0
+clips with >1 split: 0
+clips with >1 camera: 1377
+clips with >1 state_code: 0
+duplicate (clip_id, frame_no): 5508
+duplicate (clip_id, camera, frame_no): 0
+clip shape (n_camera, n_frame_no) counts: {(5, 4): 1377}
+example clip (camera, frame_no): [('A', 9), ('A', 27), ('B', 9), ('C', 19), ('D', 1), ('D', 19), ('E', 1), ('E', 27)]
+clips per (person, target, state_code): {1: 1377}
+frame_no range: 1 - 33 | state_code unique: 240
+
+## 5. 파일 대응·해상도·디코딩·해시 중복
+files on disk: 11016 | missing: 0 | extra: 0
+metadata width×height: {(384, 216): 11016}
+actual dims: {(384, 216): 11016} | modes: {'RGB': 11016}
+decode failures: 0 []
+file_size mismatch: 0 | dim mismatch vs metadata: 0
+exact-duplicate groups: 0 | images in them: 0 | groups spanning splits: 0 | groups spanning clips: 0
+
+## 6. Train 부분집합 CSV(25/50/100%)
+ 25%: rows=4908 splits={'train': 2036, 'val': 1440, 'test': 1432} train_part_subset_of_train=True val_test_identical=True train classes=12 persons=16 clips=916 whole_clips=False imgs/clip={1: 263, 2: 335, 3: 195, 5: 20, 4: 100, 6: 3}
+      train per class: {0: 80, 1: 200, 2: 200, 3: 224, 4: 160, 5: 222, 6: 280, 7: 200, 8: 200, 9: 78, 10: 80, 11: 112}
+ 50%: rows=6944 splits={'train': 4072, 'val': 1440, 'test': 1432} train_part_subset_of_train=True val_test_identical=True train classes=12 persons=16 clips=1017 whole_clips=False imgs/clip={1: 26, 3: 221, 5: 236, 6: 100, 4: 311, 2: 101, 8: 3, 7: 19}
+      train per class: {0: 160, 1: 400, 2: 400, 3: 448, 4: 320, 5: 444, 6: 560, 7: 400, 8: 400, 9: 156, 10: 160, 11: 224}
+100%: rows=11016 splits={'train': 8144, 'val': 1440, 'test': 1432} train_part_subset_of_train=True val_test_identical=True train classes=12 persons=16 clips=1018 whole_clips=True imgs/clip={8: 1018}
+      train per class: {0: 320, 1: 800, 2: 800, 3: 896, 4: 640, 5: 888, 6: 1120, 7: 800, 8: 800, 9: 312, 10: 320, 11: 448}
+25⊂50: True | 50⊂100: True | 100 train part == train: True
+100pct rows identical to metadata.csv: True
+
+## 7. class_counts.csv 대조
+rows compared: 36 | images match: True | people match: True
+class_mapping consistent: True
+
+## 8. Train만: 클래스별 구성과 지름길 위험
+                        images  clips  persons cameras equipment   pose
+target_id exercise                                                     
+0         Y - Exercise     320     40        5   ABCDE     맨몸 운동  엎드린자세
+1         니푸쉬업             800    100        5   ABCDE     맨몸 운동  엎드린자세
+2         덤벨 벤트오버 로우       800    100        5   ABCDE     바벨/덤벨   선 자세
+3         딥스               896    112        7   ABCDE        기구     기구
+4         라잉 레그 레이즈        640     80        5   ABCDE     맨몸 운동   누운자세
+5         랫풀 다운            888    111        7   ABCDE        기구     기구
+6         로잉머신            1120    140        7   ABCDE        기구     기구
+7         바벨 데드리프트         800    100        5   ABCDE     바벨/덤벨   선 자세
+8         바벨 런지            800    100        5   ABCDE     바벨/덤벨   선 자세
+9         바벨 로우            312     39        5   ABCDE     바벨/덤벨   선 자세
+10        바이시클 크런치         320     40        5   ABCDE     맨몸 운동   누운자세
+11        케이블 크런치          448     56        7   ABCDE        기구     기구
+
+Train imbalance max/min images: 1120 / 312 = 3.59
+Train camera counts: {'C': 1609, 'B': 1645, 'E': 1639, 'D': 1599, 'A': 1652}
+
+Train person × class (images):
+target_id  0    1    2    3    4    5    6    7    8   9   10  11
+person_id                                                        
+Z115       64  160    0    0  128    0    0    0    0   0  64   0
+Z17         0    0  160    0    0    0    0  160  160  56   0   0
+Z18         0    0  160    0    0    0    0  160  160  64   0   0
+Z19         0    0  160    0    0    0    0  160  160  64   0   0
+Z21         0    0  160    0    0    0    0  160  160  64   0   0
+Z22         0    0  160    0    0    0    0  160  160  64   0   0
+Z3         64  160    0    0  128    0    0    0    0   0  64   0
+Z56        64  160    0    0  128    0    0    0    0   0  64   0
+Z61        64  160    0    0  128    0    0    0    0   0  64   0
+Z82         0    0    0  128    0  128  160    0    0   0   0  64
+Z84        64  160    0  128  128  128  160    0    0   0  64  64
+Z85         0    0    0  128    0  128  160    0    0   0   0  64
+Z86         0    0    0  128    0  128  160    0    0   0   0  64
+Z87         0    0    0  128    0  128  160    0    0   0   0  64
+Z88         0    0    0  128    0  128  160    0    0   0   0  64
+Z90         0    0    0  128    0  120  160    0    0   0   0  64
