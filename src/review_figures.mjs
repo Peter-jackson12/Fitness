@@ -216,7 +216,7 @@ const data = {
       true
     ],
     [
-      "중앙 크롭",
+      "ccrop",
       0.0278,
       8,
       2,
@@ -301,7 +301,7 @@ for(let i=0;i<12;i++){let x=30+(i%3)*273,y=765+Math.floor(i/3)*25;b+=txt(x,y,`${
 b+=rect(30,872,820,50,"#fff4e8","none",9)+txt(46,902,"바벨 로우: 64장 중 6장 정답(9.4%) · 58장 오답",17,C.orange,700);
 const cm=wrap("최종 Test · 클래스별 혼동행렬","각 칸: 실제 클래스 내 비율(위), 이미지 수(아래). 파랑=정답, 주황=오답.",880,955,b,"출처: experiments/E08/pred_test.csv 및 test_summary.json");
 b=txt(30,106,"전처리",14,C.muted,700)+txt(251,106,"평균 Δ Macro F1",14,C.muted,700)+txt(568,106,"개선 쌍",14,C.muted,700,"middle")+txt(657,106,"붕괴 fold",14,C.muted,700,"middle")+txt(805,106,"판정",14,C.muted,700,"middle");
-for(let i=0;i<d.cv.length;i++){let [name,v,positive,collapse,time,pass]=d.cv[i],y=124+i*66,col=pass?C.teal:C.orange;b+=rect(30,y,820,53,C.white,C.line,8)+txt(45,y+32,name,16,C.ink,700)+rect(251,y+13,205,26,"#e5ecf3","none",5)+rect(251,y+13,205*v/.035,26,col,"none",5)+txt(516,y+33,"+"+v.toFixed(4),15,C.ink,700,"end")+txt(568,y+32,positive+"/9",16,C.ink,700,"middle")+txt(657,y+32,collapse+"/3",16,collapse>=2?C.orange:C.ink,700,"middle")+txt(805,y+32,pass?"채택":"기각",16,col,700,"middle")}
+for(let i=0;i<d.cv.length;i++){let [name,v,positive,collapse,time,pass]=d.cv[i],y=124+i*66,col=pass?C.teal:C.orange;b+=rect(30,y,820,53,C.white,C.line,8)+txt(45,y+32,name,16,C.ink,700)+rect(251,y+13,205,26,"#e5ecf3","none",5)+rect(251,y+13,205*v/.035,26,col,"none",5)+txt(516,y+33,"+"+v.toFixed(4),15,C.ink,700,"end")+txt(568,y+32,positive+"/9",16,C.ink,700,"middle")+txt(657,y+32,collapse+"/3",16,collapse>=2?C.orange:C.ink,700,"middle")+txt(805,y+32,pass?"채택":"채택 안 함",16,col,700,"middle")}
 b+=rect(30,333,820,75,"#e8f3f3","none",10)+txt(45,359,"운영 기준",14,C.teal,700)+txt(45,384,"평균 Δ ≥ +0.010 · 6/9쌍 이상 개선 · 2/3 fold 이상 개선 · 붕괴 fold 2개 미만",15,C.ink);
 b+=txt(30,437,"aspect384도 fold 1개에서 클래스 붕괴가 발생했습니다. 최종 Test 재평가 결과는 아닙니다.",14,C.muted);
 const cv=wrap("전처리 비교 · 성능과 클래스 붕괴","동일 fold·seed의 letterbox 대비 짝 비교(3 folds × 3 seeds)",880,476,b,"출처: notebooks/14_cv_stage2.ipynb 저장 결과");
