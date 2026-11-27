@@ -40,11 +40,12 @@ def predict_split(run_id: str, strategy: str, split: str = "val", device=None, b
             raise ValueError("교차검증 실행은 그 fold의 검증 데이터(split='val')만 예측한다")
         df = load_cv(cfg["cv_fold"])[1]
     else:
-        df = load_split(split)
+        df = load_split(split, cfg.get("train_pct", 100) if split == "train" else 100)
     pre = preprocess or cfg.get("preprocess", "letterbox")  # 기본은 학습 때와 같은 입력
     _, eval_tf = build_transforms(cfg.get("input_size", 224), preprocess=pre)
     loader = DataLoader(FitnessDataset(df, eval_tf), batch_size=batch_size, shuffle=False, num_workers=0)
-    out = evaluate(load_trained(run_id, strategy, device), loader, device, return_outputs=True)
+    out = evaluate(load_trained(run_id, strategy, device), loader, device,
+                   amp=cfg.get("amp_fp16", True), return_outputs=True)
     names = class_names()
     res = df[META_COLS].copy()
     res["pred"] = out["y_pred"]
