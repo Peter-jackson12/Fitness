@@ -126,6 +126,9 @@ def balanced_class_weights(train_pct: int = 100, num_classes: int = 12) -> torch
     """
     counts = load_split("train", train_pct)["target_id"].value_counts().reindex(range(num_classes), fill_value=0)
     n = counts.to_numpy(dtype=float)
+    if (n == 0).any():
+        missing = counts.index[n == 0].tolist()
+        raise ValueError(f"학습 데이터에 없는 클래스(target_id): {missing}")
     return torch.tensor(n.sum() / (num_classes * n), dtype=torch.float32)
 
 
