@@ -4,12 +4,13 @@
 - 사진마다 두 번 호출한다.
   1) blind: 정답·예측을 알려 주지 않고 12개 운동 중 무엇으로 보이는지
   2) explain: 정답과 모델 예측을 알려 주고 안내문 항목(특징, 구분 단서, 오류 요인, 판단 어려운 점)
-- 호출 수 상한(MAX_CALLS)과 누적 비용 상한(--budget-usd)을 넘기 전에 멈춘다. 학원 키는 초과해도 자동 차단이 없다.
+- 본 실행 기록은 최대 MAX_CALLS건, probe는 별도 1건이다. 누적 추정 비용과 다음 호출 예상 비용으로 중단한다.
+- 실제 청구액의 엄격한 상한은 아니다. SDK 자동 재시도를 끄고 사용량을 알 수 없는 실패 뒤에는 중단한다.
 - 응답은 `experiments/VLM/results.jsonl`에 한 줄씩 원문 그대로 남긴다. 다시 실행하면 이미 끝난 (이미지, 단계)는 건너뛴다.
 
 사용
   python src/vlm_analyze.py --list-models                  # 모델 목록(무료)
-  python src/vlm_analyze.py --model M --probe              # 최소 호출 1회(이미지 1장, blind)
+  python src/vlm_analyze.py --model M --probe --price-in X --price-out Y  # 별도 기록 1회
   python src/vlm_analyze.py --model M --price-in X --price-out Y --budget-usd 3
 """
 from __future__ import annotations
@@ -17,6 +18,7 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import math
 import os
 import sys
 import time
@@ -30,6 +32,10 @@ from common import DATA_RAW, ROOT, class_names  # noqa: E402
 VLM_DIR = ROOT / "experiments" / "VLM"
 RESULTS = VLM_DIR / "results.jsonl"
 MAX_CALLS = 110
+MAX_OUTPUT_TOKENS = 1500
+# 입력 토큰 예약은 추정치다. 이미지 토큰·실제 청구액의 상한을 보장하지 않는다.
+ESTIMATED_INPUT_RESERVE = 10000
+PROBE_RESULTS = VLM_DIR / "probe_results.jsonl"
 NAMES = class_names()
 CLASS_LIST = ", ".join(f"{i} {n}" for i, n in NAMES.items())
 
@@ -77,23 +83,58 @@ def done_keys() -> set:
 
 
 def spent_usd(price_in: float, price_out: float) -> float:
-    if not RESULTS.exists():
-        return 0.0
     tot = 0.0
-    for r in map(json.loads, RESULTS.read_text(encoding="utf-8").splitlines()):
-        tot += r.get("input_tokens", 0) / 1e6 * price_in + r.get("output_tokens", 0) / 1e6 * price_out
+    for path in (RESULTS, PROBE_RESULTS):
+        if not path.exists():
+            continue
+        for r in map(json.loads, path.read_text(encoding="utf-8").splitlines()):
+            if r.get("input_tokens") is None or r.get("output_tokens") is None:
+                raise RuntimeError("사용량 미확인 기록이 있습니다. 제공자 청구 내역을 확인하기 전에는 재개하지 않습니다.")
+            tot += r["input_tokens"] / 1e6 * price_in + r["output_tokens"] / 1e6 * price_out
     return tot
 
 
-def call(client, model: str, prompt: str, img: Path) -> tuple[dict, object]:
+def check_budget(price_in: float, price_out: float, budget: float) -> None:
+    spent = spent_usd(price_in, price_out)
+    reserve = (ESTIMATED_INPUT_RESERVE * price_in + MAX_OUTPUT_TOKENS * price_out) / 1e6
+    if spent + reserve >= budget * 0.95:
+        sys.exit(f"누적 추정 ${spent:.4f} + 다음 호출 예약 ${reserve:.4f}: 비용 중단 기준 도달")
+
+
+def validate_prices(price_in, price_out, budget):
+    if any(v is None or not math.isfinite(v) or v < 0 for v in (price_in, price_out)):
+        sys.exit("--price-in/--price-out에 유한한 0 이상의 실제 단가를 입력하세요")
+    if not math.isfinite(budget) or budget <= 0:
+        sys.exit("--budget-usd는 유한한 양수여야 합니다")
+
+
+def call(client, model: str, prompt: str, img: Path) -> tuple[str, object]:
     resp = client.responses.create(
         model=model,
         input=[{"role": "user", "content": [{"type": "input_text", "text": prompt},
                                             {"type": "input_image", "image_url": data_url(img), "detail": "high"}]}],
         text={"format": {"type": "json_object"}},
-        max_output_tokens=1500,
+        max_output_tokens=MAX_OUTPUT_TOKENS,
     )
-    return json.loads(resp.output_text), resp.usage
+    return resp.output_text, resp.usage
+
+
+def record_call(client, model, prompt, img, rec, path):
+    # JSON 파싱 실패 전에 사용량을 먼저 기록한다. 요청 실패의 비용은 알 수 없으므로 0으로 취급하지 않는다.
+    try:
+        raw, usage = call(client, model, prompt, img)
+        if usage is None:
+            raise RuntimeError("API 응답의 사용량 없음")
+        rec.update(input_tokens=usage.input_tokens, output_tokens=usage.output_tokens)
+        rec.update(ok=True, answer=json.loads(raw))
+    except Exception as e:
+        rec.update(ok=False, error=f"{type(e).__name__}: {str(e)[:300]}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    if rec.get("input_tokens") is None or rec.get("output_tokens") is None:
+        sys.exit("사용량을 확인할 수 없어 중단했습니다. 제공자 청구 내역을 확인하세요.")
+    return rec
 
 
 def main() -> None:
@@ -107,7 +148,7 @@ def main() -> None:
     a = p.parse_args()
 
     from openai import OpenAI
-    client = OpenAI(api_key=read_key())
+    client = OpenAI(api_key=read_key(), max_retries=0)
     if a.list_models:
         ids = sorted(m.id for m in client.models.list())
         print("\n".join(ids))
@@ -115,17 +156,17 @@ def main() -> None:
     if not a.model:
         sys.exit("--model이 필요하다")
 
+    validate_prices(a.price_in, a.price_out, a.budget_usd)
     cand = pd.read_csv(VLM_DIR / "candidates.csv")
     if a.probe:
+        if PROBE_RESULTS.exists() and PROBE_RESULTS.stat().st_size:
+            sys.exit("이미 probe 기록이 있습니다. 반복 호출을 막기 위해 중단합니다.")
+        check_budget(a.price_in, a.price_out, a.budget_usd)
         row = cand.iloc[0]
-        t0 = time.time()
-        out, usage = call(client, a.model, BLIND, DATA_RAW / row.image_path)
-        print(json.dumps({"model": a.model, "image_id": row.image_id, "seconds": round(time.time() - t0, 1),
-                          "input_tokens": usage.input_tokens, "output_tokens": usage.output_tokens, "answer": out},
+        rec = {"model": a.model, "image_id": row.image_id, "stage": "probe"}
+        print(json.dumps(record_call(client, a.model, BLIND, DATA_RAW / row.image_path, rec, PROBE_RESULTS),
                          ensure_ascii=False, indent=1))
         return
-    if a.price_in is None or a.price_out is None:
-        sys.exit("본 실행에는 --price-in, --price-out(공식 단가)이 필요하다(비용 상한 계산)")
 
     done = done_keys()
     n_calls = sum(1 for _ in open(RESULTS, encoding="utf-8")) if RESULTS.exists() else 0
@@ -136,20 +177,12 @@ def main() -> None:
                 continue
             if n_calls >= MAX_CALLS:
                 sys.exit(f"호출 상한 {MAX_CALLS}회에 닿아 멈춤")
-            spent = spent_usd(a.price_in, a.price_out)
-            if spent >= a.budget_usd * 0.95:
-                sys.exit(f"누적 추정 비용 ${spent:.3f}가 상한 ${a.budget_usd}의 95%에 닿아 멈춤")
+            check_budget(a.price_in, a.price_out, a.budget_usd)
             prompt = BLIND if stage == "blind" else EXPLAIN.format(
                 true=row.true_name, pred=row.pred_name, result="맞힘" if row.kind == "정답" else "틀림")
             rec = {"image_id": row.image_id, "stage": stage, "kind": row.kind, "true": int(row.target_id), "pred": int(row.pred),
                    "camera": row.camera, "model": a.model, "time": time.strftime("%Y-%m-%d %H:%M:%S")}
-            try:
-                out, usage = call(client, a.model, prompt, DATA_RAW / row.image_path)
-                rec.update(ok=True, answer=out, input_tokens=usage.input_tokens, output_tokens=usage.output_tokens)
-            except Exception as e:  # 실패도 기록하고(비용 0으로) 다음으로
-                rec.update(ok=False, error=f"{type(e).__name__}: {str(e)[:300]}")
-            with open(RESULTS, "a", encoding="utf-8") as f:
-                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            record_call(client, a.model, prompt, DATA_RAW / row.image_path, rec, RESULTS)
             n_calls += 1
             print(f"{n_calls:3d} {row.image_id} {stage} ok={rec['ok']} 누적 ${spent_usd(a.price_in, a.price_out):.3f}", flush=True)
     print("완료")
